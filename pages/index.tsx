@@ -14,6 +14,7 @@ import type {
 } from "next";
 import { Layout } from "../components/Layout";
 import { Product } from "../types/product";
+import Image from "next/image";
 
 export default function Home({
   products,
@@ -30,14 +31,37 @@ export default function Home({
         <Grid container spacing={3}>
           {products.map((product: Product) => {
             return (
-              <Grid item md={4} key={product.id}>
-                <Card>
+              <Grid item xs={6} sm={4} md={3} key={product.id}>
+                <Card
+                  style={{
+                    position: "relative",
+                    maxWidth: "290px",
+                  }}
+                >
                   <CardActionArea>
                     <CardMedia
-                      component="img"
-                      image={product.image.formats.medium.url}
+                      // component="img"
+                      // image={product.image.formats.small.url}
                       title={product.name}
-                    ></CardMedia>
+                    >
+                      <div
+                        style={{
+                          position: "relative",
+                          width: "100%",
+                        }}
+                      >
+                        {product.image && (
+                          <Image
+                            src={product.image.formats.medium.url}
+                            // layout="fill"
+                            // objectFit="cover" // or objectFit="cover"
+                            width={290}
+                            height={435}
+                            quality={75}
+                          />
+                        )}
+                      </div>
+                    </CardMedia>
                     <CardContent>
                       <Typography>{product.name}</Typography>
                     </CardContent>
@@ -60,7 +84,7 @@ export default function Home({
 
 export async function getServerSideProps() {
   const res = await fetch(
-    `${process.env.API_URL}/products?_sort=created_at:ASC&_limit=6`
+    `${process.env.API_URL}/products?_sort=created_at:ASC`
   );
   const products = await res.json();
 

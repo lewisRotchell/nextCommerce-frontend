@@ -17,6 +17,7 @@ interface Sizes {
 
 interface Formats {
   medium: Sizes;
+  small: Sizes;
 }
 
 interface Image {
