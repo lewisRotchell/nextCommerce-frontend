@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Head from "next/head";
 import {
   AppBar,
@@ -10,12 +10,17 @@ import {
 import useStyles from "../utils/styles";
 import NextLink from "next/link";
 
-export const Layout: React.FC = ({ children }) => {
+interface LayoutProps {
+  title?: string;
+  children?: ReactNode;
+}
+
+export const Layout: React.FC<LayoutProps> = ({ children, title }) => {
   const classes = useStyles();
   return (
     <>
       <Head>
-        <title>NextCommerce</title>
+        <title>{title ? `${title} - NextCommerce` : `NextCommerce`}</title>
       </Head>
       <AppBar className={classes.navbar} position="static">
         <Toolbar>

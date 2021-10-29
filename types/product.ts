@@ -32,4 +32,7 @@ export interface IProduct {
   slug: string;
   description: string;
   created_at: string;
+  category: string;
+  reviews: [];
+  count_in_stock: number;
 }
