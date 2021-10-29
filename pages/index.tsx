@@ -13,8 +13,9 @@ import type {
   InferGetServerSidePropsType,
 } from "next";
 import { Layout } from "../components/Layout";
-import { Product } from "../types/product";
+import { IProduct } from "../types/product";
 import Image from "next/image";
+import NextLink from "next/link";
 
 export default function Home({
   products,
@@ -26,57 +27,55 @@ export default function Home({
   return (
     <Layout>
       <div>
-        <h1>Latest Products</h1>
+        <Typography component="h1">Latest Products</Typography>
 
-        <Grid container spacing={3}>
-          {products.map((product: Product) => {
-            return (
-              <Grid item xs={6} sm={4} md={3} key={product.id}>
-                <Card
-                  style={{
-                    position: "relative",
-                    maxWidth: "290px",
-                  }}
-                >
-                  <CardActionArea>
-                    <CardMedia
-                      // component="img"
-                      // image={product.image.formats.small.url}
-                      title={product.name}
-                    >
-                      <div
-                        style={{
-                          position: "relative",
-                          width: "100%",
-                        }}
-                      >
-                        {product.image && (
-                          <Image
-                            src={product.image.formats.medium.url}
-                            // layout="fill"
-                            // objectFit="cover" // or objectFit="cover"
-                            width={290}
-                            height={435}
-                            quality={75}
-                          />
-                        )}
-                      </div>
-                    </CardMedia>
-                    <CardContent>
-                      <Typography>{product.name}</Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                    <Typography>£{product.price}</Typography>
-                    <Button size="small" color="primary">
-                      Add to cart
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            );
-          })}
-        </Grid>
+        {products && (
+          <Grid container spacing={3}>
+            {products.map((product: IProduct) => {
+              return (
+                <Grid item xs={6} sm={4} md={3} key={product.id}>
+                  <Card
+                    style={{
+                      position: "relative",
+                      maxWidth: "290px",
+                    }}
+                  >
+                    <NextLink href={`/product/${product.slug}`} passHref>
+                      <CardActionArea>
+                        <CardMedia title={product.name}>
+                          <div
+                            style={{
+                              position: "relative",
+                              width: "100%",
+                            }}
+                          >
+                            {product.image && (
+                              <Image
+                                src={product.image.formats.medium.url}
+                                width={290}
+                                height={435}
+                                quality={75}
+                              />
+                            )}
+                          </div>
+                        </CardMedia>
+                        <CardContent>
+                          <Typography>{product.name}</Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </NextLink>
+                    <CardActions>
+                      <Typography>£{product.price}</Typography>
+                      <Button size="small" color="primary">
+                        Add to cart
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              );
+            })}
+          </Grid>
+        )}
       </div>
     </Layout>
   );

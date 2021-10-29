@@ -10,9 +10,17 @@ const useStyles = makeStyles({
   },
   main: {
     minHeight: "80vh",
+    fontFamily: "Roboto",
   },
   footer: {
     textAlign: "center",
+  },
+  brand: {
+    fontWeight: "bold",
+    fontSize: "1.5rem",
+  },
+  grow: {
+    flexGrow: 1,
   },
 });
 
